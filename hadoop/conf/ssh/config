@@ -1,0 +1,8 @@
+Host 100.2.1.10
+  User hadoop
+  StrictHostKeyChecking no
+  IdentityFile ~/.ssh/id_rsa
+Host 100.2.1.11
+  User hadoop
+  StrictHostKeyChecking no
+  IdentityFile ~/.ssh/id_rsa

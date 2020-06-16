@@ -1,0 +1,9 @@
+aws
+docker
+hadoop
+secret/*.pem
+supervisor
+tmp
+.gitignore
+LICENSE
+README.md

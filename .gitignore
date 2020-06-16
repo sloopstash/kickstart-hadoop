@@ -3,6 +3,7 @@ downloads/*.rpm
 downloads/*.deb
 downloads/*.tar.gz
 downloads/*.zip
-secrets/*.pem
-secrets/*.pub
+secret/*.pem
+secret/*.pub
 tmp/*
+*/data

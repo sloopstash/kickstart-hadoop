@@ -1,10 +1,10 @@
 <configuration>
   <property>
     <name>fs.defaultFS</name>
-    <value>hdfs://100.2.1.10:9000</value>
+    <value>hdfs://<%=@name_node%>:9000</value>
   </property>
   <property>
     <name>hadoop.tmp.dir</name>
-    <value>/opt/hadoop/data/tmp</value>
+    <value><%=@tmp_dir%></value>
   </property>
 </configuration>

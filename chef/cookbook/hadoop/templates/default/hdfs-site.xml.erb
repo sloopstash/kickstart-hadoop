@@ -1,0 +1,14 @@
+<configuration>
+  <%if @node_name.include?('-nm-')%>
+  <property>
+    <name>dfs.name.dir</name>
+    <value>file://<%=@data_dir%></value>
+  </property>
+  <%end%>
+  <%if @node_name.include?('-dt-')%>
+  <property>
+    <name>dfs.data.dir</name>
+    <value>file://<%=@data_dir%></value>
+  </property>
+  <%end%>
+</configuration>

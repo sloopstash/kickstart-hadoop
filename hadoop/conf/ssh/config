@@ -1,8 +1,8 @@
-Host 100.2.1.10
+Host 100.10.1.*
   User hadoop
   StrictHostKeyChecking no
   IdentityFile ~/.ssh/id_rsa
-Host 100.2.1.11
+Host 100.10.2.*
   User hadoop
   StrictHostKeyChecking no
   IdentityFile ~/.ssh/id_rsa

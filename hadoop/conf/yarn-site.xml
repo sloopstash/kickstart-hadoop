@@ -5,6 +5,6 @@
   </property>
   <property>
     <name>yarn.resourcemanager.hostname</name>
-    <value>100.2.1.10</value>
+    <value>hdp-namenode-1</value>
   </property>
 </configuration>

@@ -1,56 +1,113 @@
 version: '3'
 services:
-  hadoop-namenode:
+  hdp-namenode-1:
     image: sloopstash/hadoop:v1
-    container_name: hadoop-namenode
+    container_name: hdp-namenode-1
     command: "/usr/bin/supervisord -c /etc/supervisord.conf"
-    hostname: hadoop-namenode
+    hostname: hdp-namenode-1
     env_file:
       - hadoop.env
+    networks:
+      hadoop-net:
+        ipv4_address: 100.10.1.10
     ports:
       - "9000:9000"
     volumes:
       - /opt/kickstart-hadoop/supervisor/conf/main.conf:/etc/supervisord.conf
       - /opt/kickstart-hadoop/supervisor/conf/sshd.ini:/etc/supervisord.d/sshd.ini
-      - /opt/kickstart-hadoop/hadoop/data/namenode/tmp:/opt/hadoop/data/tmp
-      - /opt/kickstart-hadoop/hadoop/data/namenode/hdfs/namenode:/opt/hadoop/data/hdfs/namenode
-      - /opt/kickstart-hadoop/hadoop/data/namenode/hdfs/datanode:/opt/hadoop/data/hdfs/datanode
+      - /opt/kickstart-hadoop/hadoop/data/hdpnn1:/opt/hadoop/data
       - /opt/kickstart-hadoop/hadoop/conf/core-site.xml:/usr/local/lib/hadoop/etc/hadoop/core-site.xml
-      - /opt/kickstart-hadoop/hadoop/conf/hdfs-site.xml:/usr/local/lib/hadoop/etc/hadoop/hdfs-site.xml
       - /opt/kickstart-hadoop/hadoop/conf/mapred-site.xml:/usr/local/lib/hadoop/etc/hadoop/mapred-site.xml
       - /opt/kickstart-hadoop/hadoop/conf/yarn-site.xml:/usr/local/lib/hadoop/etc/hadoop/yarn-site.xml
       - /opt/kickstart-hadoop/hadoop/conf/hadoop-env.sh:/usr/local/lib/hadoop/etc/hadoop/hadoop-env.sh
+      - /opt/kickstart-hadoop/hadoop/conf/namenode/hdfs-site.xml:/usr/local/lib/hadoop/etc/hadoop/hdfs-site.xml
       - /opt/kickstart-hadoop/hadoop/conf/slaves:/usr/local/lib/hadoop/etc/hadoop/slaves
       - /opt/kickstart-hadoop/hadoop/conf/ssh/config:/usr/local/lib/hadoop/.ssh/config
-      - /opt/kickstart-hadoop/hadoop/conf/ssh/known_hosts:/usr/local/lib/hadoop/.ssh/known_hosts     
-      - /opt/kickstart-hadoop/secrets/hadoop.pem:/usr/local/lib/hadoop/.ssh/id_rsa
-    networks:
-      elk-net:
-        ipv4_address: 100.2.1.10
-  hadoop-datanode:
+      - /opt/kickstart-hadoop/secret/hadoop.pem:/usr/local/lib/hadoop/.ssh/id_rsa
+  hdp-namenode-2:
     image: sloopstash/hadoop:v1
-    container_name: hadoop-datanode
+    container_name: hdp-namenode-2
     command: "/usr/bin/supervisord -c /etc/supervisord.conf"
-    hostname: hadoop-datanode
+    hostname: hdp-namenode-2
     env_file:
       - hadoop.env
-    depends_on:
-      - hadoop-namenode
+    networks:
+      hadoop-net:
+        ipv4_address: 100.10.1.11
+    ports:
+      - "9001:9000"
     volumes:
       - /opt/kickstart-hadoop/supervisor/conf/main.conf:/etc/supervisord.conf
       - /opt/kickstart-hadoop/supervisor/conf/sshd.ini:/etc/supervisord.d/sshd.ini
-      - /opt/kickstart-hadoop/hadoop/data/datanode-1/tmp:/opt/hadoop/data/tmp
-      - /opt/kickstart-hadoop/hadoop/data/datanode-1/hdfs/namenode:/opt/hadoop/data/hdfs/namenode
-      - /opt/kickstart-hadoop/hadoop/data/datanode-1/hdfs/datanode:/opt/hadoop/data/hdfs/datanode
+      - /opt/kickstart-hadoop/hadoop/data/hdpnn2:/opt/hadoop/data
       - /opt/kickstart-hadoop/hadoop/conf/core-site.xml:/usr/local/lib/hadoop/etc/hadoop/core-site.xml
-      - /opt/kickstart-hadoop/hadoop/conf/hdfs-site.xml:/usr/local/lib/hadoop/etc/hadoop/hdfs-site.xml
       - /opt/kickstart-hadoop/hadoop/conf/mapred-site.xml:/usr/local/lib/hadoop/etc/hadoop/mapred-site.xml
       - /opt/kickstart-hadoop/hadoop/conf/yarn-site.xml:/usr/local/lib/hadoop/etc/hadoop/yarn-site.xml
       - /opt/kickstart-hadoop/hadoop/conf/hadoop-env.sh:/usr/local/lib/hadoop/etc/hadoop/hadoop-env.sh
+      - /opt/kickstart-hadoop/hadoop/conf/namenode/hdfs-site.xml:/usr/local/lib/hadoop/etc/hadoop/hdfs-site.xml
+      - /opt/kickstart-hadoop/hadoop/conf/slaves:/usr/local/lib/hadoop/etc/hadoop/slaves
+      - /opt/kickstart-hadoop/hadoop/conf/ssh/config:/usr/local/lib/hadoop/.ssh/config
+      - /opt/kickstart-hadoop/secret/hadoop.pem:/usr/local/lib/hadoop/.ssh/id_rsa
+  hdp-datanode-1:
+    image: sloopstash/hadoop:v1
+    container_name: hdp-datanode-1
+    command: "/usr/bin/supervisord -c /etc/supervisord.conf"
+    hostname: hdp-datanode-1
+    env_file:
+      - hadoop.env
     networks:
-      elk-net:
-        ipv4_address: 100.2.1.11
+      hadoop-net:
+        ipv4_address: 100.10.2.10
+    volumes:
+      - /opt/kickstart-hadoop/supervisor/conf/main.conf:/etc/supervisord.conf
+      - /opt/kickstart-hadoop/supervisor/conf/sshd.ini:/etc/supervisord.d/sshd.ini
+      - /opt/kickstart-hadoop/hadoop/data/hdpdn1:/opt/hadoop/data
+      - /opt/kickstart-hadoop/hadoop/conf/core-site.xml:/usr/local/lib/hadoop/etc/hadoop/core-site.xml
+      - /opt/kickstart-hadoop/hadoop/conf/mapred-site.xml:/usr/local/lib/hadoop/etc/hadoop/mapred-site.xml
+      - /opt/kickstart-hadoop/hadoop/conf/yarn-site.xml:/usr/local/lib/hadoop/etc/hadoop/yarn-site.xml
+      - /opt/kickstart-hadoop/hadoop/conf/hadoop-env.sh:/usr/local/lib/hadoop/etc/hadoop/hadoop-env.sh
+      - /opt/kickstart-hadoop/hadoop/conf/datanode/hdfs-site.xml:/usr/local/lib/hadoop/etc/hadoop/hdfs-site.xml
+  hdp-datanode-2:
+    image: sloopstash/hadoop:v1
+    container_name: hdp-datanode-2
+    command: "/usr/bin/supervisord -c /etc/supervisord.conf"
+    hostname: hdp-datanode-2
+    env_file:
+      - hadoop.env
+    networks:
+      hadoop-net:
+        ipv4_address: 100.10.2.11
+    volumes:
+      - /opt/kickstart-hadoop/supervisor/conf/main.conf:/etc/supervisord.conf
+      - /opt/kickstart-hadoop/supervisor/conf/sshd.ini:/etc/supervisord.d/sshd.ini
+      - /opt/kickstart-hadoop/hadoop/data/hdpdn2:/opt/hadoop/data
+      - /opt/kickstart-hadoop/hadoop/conf/core-site.xml:/usr/local/lib/hadoop/etc/hadoop/core-site.xml
+      - /opt/kickstart-hadoop/hadoop/conf/mapred-site.xml:/usr/local/lib/hadoop/etc/hadoop/mapred-site.xml
+      - /opt/kickstart-hadoop/hadoop/conf/yarn-site.xml:/usr/local/lib/hadoop/etc/hadoop/yarn-site.xml
+      - /opt/kickstart-hadoop/hadoop/conf/hadoop-env.sh:/usr/local/lib/hadoop/etc/hadoop/hadoop-env.sh
+      - /opt/kickstart-hadoop/hadoop/conf/datanode/hdfs-site.xml:/usr/local/lib/hadoop/etc/hadoop/hdfs-site.xml
+  hdp-datanode-3:
+    image: sloopstash/hadoop:v1
+    container_name: hdp-datanode-3
+    command: "/usr/bin/supervisord -c /etc/supervisord.conf"
+    hostname: hdp-datanode-3
+    env_file:
+      - hadoop.env
+    networks:
+      hadoop-net:
+        ipv4_address: 100.10.2.13
+    volumes:
+      - /opt/kickstart-hadoop/supervisor/conf/main.conf:/etc/supervisord.conf
+      - /opt/kickstart-hadoop/supervisor/conf/sshd.ini:/etc/supervisord.d/sshd.ini
+      - /opt/kickstart-hadoop/hadoop/data/hdpdn3:/opt/hadoop/data
+      - /opt/kickstart-hadoop/hadoop/conf/core-site.xml:/usr/local/lib/hadoop/etc/hadoop/core-site.xml
+      - /opt/kickstart-hadoop/hadoop/conf/mapred-site.xml:/usr/local/lib/hadoop/etc/hadoop/mapred-site.xml
+      - /opt/kickstart-hadoop/hadoop/conf/yarn-site.xml:/usr/local/lib/hadoop/etc/hadoop/yarn-site.xml
+      - /opt/kickstart-hadoop/hadoop/conf/hadoop-env.sh:/usr/local/lib/hadoop/etc/hadoop/hadoop-env.sh
+      - /opt/kickstart-hadoop/hadoop/conf/datanode/hdfs-site.xml:/usr/local/lib/hadoop/etc/hadoop/hdfs-site.xml
 networks:
-  elk-net:
-    external:
-      name: elk-net
+  hadoop-net:
+    driver: bridge
+    ipam:
+     config:
+      - subnet: 100.10.0.0/16

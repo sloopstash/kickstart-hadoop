@@ -1,1 +1,1 @@
-1. place ansible-node ssh keys here.
+1. Place ssh keys of hadoop namenode and datanode here.

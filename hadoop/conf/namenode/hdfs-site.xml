@@ -1,0 +1,13 @@
+<configuration>
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>file:///opt/hadoop/data/hdfs</value>
+  </property>
+  <property>
+    <name>dfs.namenode.secondary.http-address</name>
+    <value>hdp-namenode-2:50090</value>
+    <description>
+      The secondary namenode http server address and port.
+    </description>
+  </property>
+</configuration>

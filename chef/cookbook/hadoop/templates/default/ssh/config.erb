@@ -1,6 +1,10 @@
+Host *
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
 <%@nodes.each do |node|%>
 Host <%=node%>
   User hadoop
   StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
   IdentityFile ~/.ssh/id_rsa
 <%end%>

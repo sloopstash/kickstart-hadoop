@@ -12,6 +12,16 @@
     "STGVPCCIDRBLK":{
       "Type":"String",
       "Description":"STG VPC CIDR Block."
+    },
+    "STGHDSSHPVTKey":{
+      "Type":"CommaDelimitedList",
+      "NoEcho":"true",
+      "Description":"STG Hadoop SSH Private Key."
+    },
+    "STGHDSSHPUBKey":{
+      "Type":"String",
+      "NoEcho":"true",
+      "Description":"STG Hadoop SSH Public Key."
     }
   },
   "Mappings":{
@@ -41,7 +51,7 @@
           ]
         },
         "ManagedPolicyArns":[
-          "arn:aws:iam::aws:policy/AWSCodeCommitFullAccess"
+          "arn:aws:iam::aws:policy/AmazonS3FullAccess"
         ],
         "Path":"/",
         "RoleName":"STG-IAM-EC2-RL",
@@ -178,7 +188,8 @@
         "GroupName":"STG-VPC-HD-SG",
         "SecurityGroupIngress":[
           {"IpProtocol":"-1","CidrIp":{"Ref":"STGVPCCIDRBLK"}},
-          {"IpProtocol":"tcp","FromPort":22,"ToPort":22,"CidrIp":"0.0.0.0/0"}
+          {"IpProtocol":"tcp","FromPort":22,"ToPort":22,"CidrIp":"0.0.0.0/0"},
+          {"IpProtocol":"tcp","FromPort":50070,"ToPort":50070,"CidrIp":"0.0.0.0/0"}
         ],
         "SecurityGroupEgress":[
           {"IpProtocol":"-1","CidrIp":"0.0.0.0/0"}
@@ -205,7 +216,19 @@
         "HostnameTheme":"Layer_Dependent",
         "Name":"STG-OW-HD-SK",
         "ServiceRoleArn":{"Fn::Join":[":",["arn:aws:iam:",{"Ref":"AWS::AccountId"},"role/aws-opsworks-service-role"]]},
-        "UseCustomCookbooks":false,
+        "UseCustomCookbooks":true,
+        "CustomJson":{
+          "hadoop":{
+            "ssh":{
+              "private_key":{"Fn::Join":["\n",{"Ref":"STGHDSSHPVTKey"}]},
+              "public_key":{"Ref":"STGHDSSHPUBKey"}
+            }
+          }
+        },
+        "CustomCookbooksSource":{
+          "Type":"s3",
+          "Url":"https://s3.amazonaws.com/opsworks-chef-source/cookbooks.tar.gz"
+        },
         "UseOpsworksSecurityGroups":false,
         "VpcId":{"Ref":"STGVPC"},
         "Tags":[
@@ -222,11 +245,11 @@
         "AutoAssignPublicIps":true,
         "CustomSecurityGroupIds":[{"Ref":"STGVPCHDSG"}],
         "CustomRecipes":{
-          "Setup":[],
-          "Configure":[],
+          "Setup":["hadoop::setup"],
+          "Configure":["hadoop::configure"],
           "Deploy":[],
           "Undeploy":[],
-          "Shutdown":[]
+          "Shutdown":["hadoop::stop"]
         },
         "EnableAutoHealing":false,
         "InstallUpdatesOnBoot":false,

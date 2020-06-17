@@ -2,7 +2,7 @@
 default['hadoop'] = {
   'version' => '2.10.0',
   'java_home' => '/usr/lib/jvm/jre-1.8.0-openjdk',
-  'heap_size' => '512',
+  'heap_size' => '256',
   'home_dir' => '/usr/local/lib/hadoop',
   'base_dir' => '/opt/hadoop',
   'config_dir' => '/opt/hadoop/conf',

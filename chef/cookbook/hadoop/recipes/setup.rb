@@ -15,7 +15,7 @@ end
 
 # install java.
 yum_package 'install java' do
-  package_name ['java-1.8.0-openjdk']
+  package_name ['java-1.8.0-openjdk','java-1.8.0-openjdk-devel']
   action :install
 end
 
@@ -39,9 +39,9 @@ directory "#{home_dir}/.ssh" do
   owner 'hadoop'
   group 'hadoop'
   recursive true
-  mode 0600
+  mode 0700
   action 'create'
-  not_if do
+  only_if do
     File.exists?home_dir
   end
 end

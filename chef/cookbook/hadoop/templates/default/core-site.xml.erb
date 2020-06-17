@@ -1,8 +1,16 @@
 <configuration>
+  <%if @node_name.include?('-nm-')%>
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://0.0.0.0:9000</value>
+  </property>
+  <%end%>
+  <%if @node_name.include?('-dt-')%>
   <property>
     <name>fs.defaultFS</name>
     <value>hdfs://<%=@name_node%>:9000</value>
   </property>
+  <%end%>
   <property>
     <name>hadoop.tmp.dir</name>
     <value><%=@tmp_dir%></value>

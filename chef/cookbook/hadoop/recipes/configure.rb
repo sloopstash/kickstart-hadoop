@@ -7,10 +7,12 @@ heap_size = node['hadoop']['heap_size']
 current_instance = search('aws_opsworks_instance','self:true').first
 current_layer_id = current_instance['layer_ids'].first
 node_name = current_instance['hostname']
+nodes = Array.new
 name_nodes = Array.new
 data_nodes = Array.new
 
 search('aws_opsworks_instance',"layer_ids:#{current_layer_id}").each do |instance|
+  nodes << instance['hostname']
   if instance['hostname'].include?('-nm-')
     name_nodes << instance['hostname']
   end
@@ -28,7 +30,7 @@ if node_name.include?('-nm-')
     variables(
       'private_key'=>node['hadoop']['ssh']['private_key']
     )
-    mode 0400
+    mode 0600
     atomic_update true
     sensitive true
     backup false
@@ -41,30 +43,41 @@ if node_name.include?('-nm-')
     owner 'hadoop'
     group 'hadoop'
     variables(
-      'data_nodes'=>data_nodes
+      'nodes'=>nodes
     )
-    mode 0400
+    mode 0600
     atomic_update true
     backup false
     action 'create'
   end
+
+# configure hadoop slaves.
+template "#{home_dir}/etc/hadoop/slaves" do
+  source 'slaves.erb'
+  owner 'hadoop'
+  group 'hadoop'
+  variables(
+    'data_nodes'=>data_nodes
+  )
+  mode 0600
+  backup false
+  action 'create'
+end
 end
 
-if node_name.include?('-dt-')
-  # configure public key of openssh user.
-  template "#{home_dir}/.ssh/authorized_keys" do
-    source 'ssh/id_rsa.pub.erb'
-    owner 'hadoop'
-    group 'hadoop'
-    variables(
-      'public_key'=>node['hadoop']['ssh']['public_key']
-    )
-    mode 0400
-    atomic_update true
-    sensitive true
-    backup false
-    action 'create'
-  end
+# configure public key of openssh user.
+template "#{home_dir}/.ssh/authorized_keys" do
+  source 'ssh/id_rsa.pub.erb'
+  owner 'hadoop'
+  group 'hadoop'
+  variables(
+    'public_key'=>node['hadoop']['ssh']['public_key']
+  )
+  mode 0600
+  atomic_update true
+  sensitive true
+  backup false
+  action 'create'
 end
 
 # configure hadoop core.
@@ -73,6 +86,7 @@ template "#{home_dir}/etc/hadoop/core-site.xml" do
   owner 'hadoop'
   group 'hadoop'
   variables(
+    'node_name'=>node_name,
     'name_node'=>name_nodes.first,
     'tmp_dir'=>tmp_dir
   )
@@ -125,20 +139,7 @@ template "#{home_dir}/etc/hadoop/yarn-site.xml" do
   owner 'hadoop'
   group 'hadoop'
   variables(
-    'name_node'=>name_nodes.first,
-  )
-  mode 0600
-  backup false
-  action 'create'
-end
-
-# configure hadoop slaves.
-template "#{home_dir}/etc/hadoop/slaves" do
-  source 'slaves.erb'
-  owner 'hadoop'
-  group 'hadoop'
-  variables(
-    'data_nodes'=>data_nodes
+    'name_node'=>name_nodes.first
   )
   mode 0600
   backup false

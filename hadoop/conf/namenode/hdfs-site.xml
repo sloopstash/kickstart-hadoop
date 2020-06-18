@@ -4,10 +4,6 @@
     <value>file:///opt/hadoop/data/hdfs</value>
   </property>
   <property>
-    <name>dfs.namenode.secondary.http-address</name>
-    <value>hdp-namenode-2:50090</value>
-  </property>
-  <property>
     <name>dfs.permissions.enabled</name>
     <value>false</value>
   </property>

@@ -30,7 +30,7 @@ RUN set -x \
   && touch /usr/local/lib/hadoop/.ssh/authorized_keys \
   && touch /usr/local/lib/hadoop/.ssh/config \
   && chmod 400 /usr/local/lib/hadoop/.ssh/config
-ADD secret/hadoop.pub /usr/local/lib/hadoop/.ssh/authorized_keys
+ADD secret/hadoop-node.pub /usr/local/lib/hadoop/.ssh/authorized_keys
 
 # install hadoop.
 RUN set -x \

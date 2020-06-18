@@ -6,8 +6,9 @@
   <property>
     <name>dfs.namenode.secondary.http-address</name>
     <value>hdp-namenode-2:50090</value>
-    <description>
-      The secondary namenode http server address and port.
-    </description>
+  </property>
+  <property>
+    <name>dfs.permissions.enabled</name>
+    <value>false</value>
   </property>
 </configuration>

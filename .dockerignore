@@ -1,4 +1,5 @@
 aws
+chef
 docker
 hadoop
 secret/*.pem

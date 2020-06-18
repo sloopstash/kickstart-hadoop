@@ -15,7 +15,8 @@ services:
     volumes:
       - /opt/kickstart-hadoop/supervisor/conf/main.conf:/etc/supervisord.conf
       - /opt/kickstart-hadoop/supervisor/conf/sshd.ini:/etc/supervisord.d/sshd.ini
-      - /opt/kickstart-hadoop/hadoop/data/hdpnn1:/opt/hadoop/data
+      - /opt/kickstart-hadoop/hadoop/data/namenode/1:/opt/hadoop/data
+      - /opt/kickstart-hadoop/hadoop/script:/opt/hadoop/script
       - /opt/kickstart-hadoop/hadoop/conf/core-site.xml:/usr/local/lib/hadoop/etc/hadoop/core-site.xml
       - /opt/kickstart-hadoop/hadoop/conf/mapred-site.xml:/usr/local/lib/hadoop/etc/hadoop/mapred-site.xml
       - /opt/kickstart-hadoop/hadoop/conf/yarn-site.xml:/usr/local/lib/hadoop/etc/hadoop/yarn-site.xml
@@ -39,7 +40,7 @@ services:
     volumes:
       - /opt/kickstart-hadoop/supervisor/conf/main.conf:/etc/supervisord.conf
       - /opt/kickstart-hadoop/supervisor/conf/sshd.ini:/etc/supervisord.d/sshd.ini
-      - /opt/kickstart-hadoop/hadoop/data/hdpnn2:/opt/hadoop/data
+      - /opt/kickstart-hadoop/hadoop/data/namenode/2:/opt/hadoop/data
       - /opt/kickstart-hadoop/hadoop/conf/core-site.xml:/usr/local/lib/hadoop/etc/hadoop/core-site.xml
       - /opt/kickstart-hadoop/hadoop/conf/mapred-site.xml:/usr/local/lib/hadoop/etc/hadoop/mapred-site.xml
       - /opt/kickstart-hadoop/hadoop/conf/yarn-site.xml:/usr/local/lib/hadoop/etc/hadoop/yarn-site.xml
@@ -61,7 +62,7 @@ services:
     volumes:
       - /opt/kickstart-hadoop/supervisor/conf/main.conf:/etc/supervisord.conf
       - /opt/kickstart-hadoop/supervisor/conf/sshd.ini:/etc/supervisord.d/sshd.ini
-      - /opt/kickstart-hadoop/hadoop/data/hdpdn1:/opt/hadoop/data
+      - /opt/kickstart-hadoop/hadoop/data/datanode/1:/opt/hadoop/data
       - /opt/kickstart-hadoop/hadoop/conf/core-site.xml:/usr/local/lib/hadoop/etc/hadoop/core-site.xml
       - /opt/kickstart-hadoop/hadoop/conf/mapred-site.xml:/usr/local/lib/hadoop/etc/hadoop/mapred-site.xml
       - /opt/kickstart-hadoop/hadoop/conf/yarn-site.xml:/usr/local/lib/hadoop/etc/hadoop/yarn-site.xml
@@ -80,7 +81,7 @@ services:
     volumes:
       - /opt/kickstart-hadoop/supervisor/conf/main.conf:/etc/supervisord.conf
       - /opt/kickstart-hadoop/supervisor/conf/sshd.ini:/etc/supervisord.d/sshd.ini
-      - /opt/kickstart-hadoop/hadoop/data/hdpdn2:/opt/hadoop/data
+      - /opt/kickstart-hadoop/hadoop/data/datanode/2:/opt/hadoop/data
       - /opt/kickstart-hadoop/hadoop/conf/core-site.xml:/usr/local/lib/hadoop/etc/hadoop/core-site.xml
       - /opt/kickstart-hadoop/hadoop/conf/mapred-site.xml:/usr/local/lib/hadoop/etc/hadoop/mapred-site.xml
       - /opt/kickstart-hadoop/hadoop/conf/yarn-site.xml:/usr/local/lib/hadoop/etc/hadoop/yarn-site.xml
@@ -99,7 +100,7 @@ services:
     volumes:
       - /opt/kickstart-hadoop/supervisor/conf/main.conf:/etc/supervisord.conf
       - /opt/kickstart-hadoop/supervisor/conf/sshd.ini:/etc/supervisord.d/sshd.ini
-      - /opt/kickstart-hadoop/hadoop/data/hdpdn3:/opt/hadoop/data
+      - /opt/kickstart-hadoop/hadoop/data/datanode/3:/opt/hadoop/data
       - /opt/kickstart-hadoop/hadoop/conf/core-site.xml:/usr/local/lib/hadoop/etc/hadoop/core-site.xml
       - /opt/kickstart-hadoop/hadoop/conf/mapred-site.xml:/usr/local/lib/hadoop/etc/hadoop/mapred-site.xml
       - /opt/kickstart-hadoop/hadoop/conf/yarn-site.xml:/usr/local/lib/hadoop/etc/hadoop/yarn-site.xml

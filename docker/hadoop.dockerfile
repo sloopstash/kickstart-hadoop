@@ -44,8 +44,7 @@ RUN set -x \
   && mkdir /opt/hadoop \
   && mkdir /opt/hadoop/data \
   && mkdir /opt/hadoop/log \
-  && mkdir /opt/hadoop/system \
-  && touch /opt/hadoop/system/process.pid \
+  && mkdir /opt/hadoop/script \
   && chown -R hadoop:hadoop /opt/hadoop \
   && history -c
 

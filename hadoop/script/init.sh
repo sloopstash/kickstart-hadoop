@@ -1,0 +1,1 @@
+/usr/local/lib/hadoop/bin/hdfs namenode -format

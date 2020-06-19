@@ -42,7 +42,7 @@ for f in $HADOOP_HOME/contrib/capacity-scheduler/*.jar; do
 done
 
 # The maximum amount of heap to use, in MB. Default is 1000.
-export HADOOP_HEAPSIZE=512s
+export HADOOP_HEAPSIZE=512
 export HADOOP_NAMENODE_INIT_HEAPSIZE=512
 
 # Enable extra debugging of Hadoop's JAAS binding, used to set up

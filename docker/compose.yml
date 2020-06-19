@@ -86,5 +86,5 @@ networks:
   hadoop-net:
     driver: bridge
     ipam:
-     config:
-      - subnet: 100.10.0.0/16
+      config:
+        - subnet: 100.10.0.0/16

@@ -22,7 +22,7 @@
 # remote nodes.
 
 # The java implementation to use.
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-2.amzn2.0.1.x86_64/jre
+export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk
 
 # The jsvc implementation to use. Jsvc is required to run secure datanodes
 # that bind to privileged ports to provide authentication of data transfer
@@ -42,7 +42,7 @@ for f in $HADOOP_HOME/contrib/capacity-scheduler/*.jar; do
 done
 
 # The maximum amount of heap to use, in MB. Default is 1000.
-export HADOOP_HEAPSIZE=512
+export HADOOP_HEAPSIZE=512s
 export HADOOP_NAMENODE_INIT_HEAPSIZE=512
 
 # Enable extra debugging of Hadoop's JAAS binding, used to set up

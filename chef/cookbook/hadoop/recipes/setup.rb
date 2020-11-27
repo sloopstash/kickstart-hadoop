@@ -69,7 +69,7 @@ end
 
 # download hadoop.
 remote_file "/tmp/hadoop-#{version}.tar.gz" do
-  source "http://apachemirror.wuchna.com/hadoop/common/hadoop-#{version}/hadoop-#{version}.tar.gz"
+  source "https://archive.apache.org/dist/hadoop/common/hadoop-#{version}/hadoop-#{version}.tar.gz"
   mode 0644
   not_if do
     File.exists?"/tmp/hadoop-#{version}.tar.gz"

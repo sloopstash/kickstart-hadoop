@@ -1,30 +1,30 @@
 version = node['hadoop']['version']
 home_dir = node['hadoop']['home_dir']
 
-# install system packages.
-yum_package 'install system packages' do
+# Install system packages.
+yum_package 'Install system packages' do
   package_name ['wget','vim','net-tools','initscripts','gcc','make','tar','bind-utils','nc','git','unzip']
   action :install
 end
 
-# install openssh.
-yum_package 'install openssh' do
+# Install OpenSSH server.
+yum_package 'Install OpenSSH server' do
   package_name ['openssh-server','openssh-clients','passwd']
   action :install
 end
 
-# install java.
-yum_package 'install java' do
+# Install Java.
+yum_package 'Install Java' do
   package_name ['java-1.8.0-openjdk','java-1.8.0-openjdk-devel']
   action :install
 end
 
-# create system group.
+# Create system group for Hadoop.
 group 'hadoop' do
   action 'create'
 end
 
-# create system user.
+# Create system user for Hadoop.
 user 'hadoop' do
   gid 'hadoop'
   home home_dir
@@ -34,7 +34,7 @@ user 'hadoop' do
   action 'create'
 end
 
-# create openssh user directory.
+# Create OpenSSH user directory.
 directory "#{home_dir}/.ssh" do
   owner 'hadoop'
   group 'hadoop'
@@ -46,7 +46,7 @@ directory "#{home_dir}/.ssh" do
   end
 end
 
-# create hadoop directories.
+# Create Hadoop directories.
 [
   node['hadoop']['base_dir'],
   node['hadoop']['config_dir'],
@@ -67,7 +67,7 @@ end
   end
 end
 
-# download hadoop.
+# Download Hadoop.
 remote_file "/tmp/hadoop-#{version}.tar.gz" do
   source "https://archive.apache.org/dist/hadoop/common/hadoop-#{version}/hadoop-#{version}.tar.gz"
   mode 0644
@@ -76,8 +76,8 @@ remote_file "/tmp/hadoop-#{version}.tar.gz" do
   end
 end
 
-# extract hadoop.
-execute 'extract hadoop' do
+# Extract Hadoop.
+execute 'Extract Hadoop' do
   command "tar xvzf hadoop-#{version}.tar.gz > /dev/null"
   cwd '/tmp'
   user 'root'
@@ -89,8 +89,8 @@ execute 'extract hadoop' do
   end
 end
 
-# install hadoop.
-execute 'install hadoop' do
+# Install Hadoop.
+execute 'Install Hadoop' do
   command <<-EOH
     cp -r hadoop-#{version}/* #{home_dir}/
     chown -R hadoop:hadoop #{home_dir}
@@ -105,7 +105,7 @@ execute 'install hadoop' do
   end
 end
 
-# include recipes.
+# Include recipes.
 include_recipe 'hadoop::configure'
 include_recipe 'hadoop::initialize'
 include_recipe 'hadoop::start'

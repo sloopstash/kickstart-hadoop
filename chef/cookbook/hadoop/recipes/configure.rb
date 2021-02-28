@@ -22,7 +22,7 @@ search('aws_opsworks_instance',"layer_ids:#{current_layer_id}").each do |instanc
 end
 
 if node_name.include?('-nm-')
-  # configure private key of openssh user.
+  # Configure private key of OpenSSH user.
   template "#{home_dir}/.ssh/id_rsa" do
     source 'ssh/id_rsa.erb'
     owner 'hadoop'
@@ -37,7 +37,7 @@ if node_name.include?('-nm-')
     action 'create'
   end
 
-  # configure hosts for openssh user.
+  # Configure hosts for OpenSSH user.
   template "#{home_dir}/.ssh/config" do
     source 'ssh/config.erb'
     owner 'hadoop'
@@ -51,7 +51,7 @@ if node_name.include?('-nm-')
     action 'create'
   end
 
-# configure hadoop slaves.
+# Configure Hadoop slaves.
 template "#{home_dir}/etc/hadoop/slaves" do
   source 'slaves.erb'
   owner 'hadoop'
@@ -65,7 +65,7 @@ template "#{home_dir}/etc/hadoop/slaves" do
 end
 end
 
-# configure public key of openssh user.
+# Configure public key of OpenSSH user.
 template "#{home_dir}/.ssh/authorized_keys" do
   source 'ssh/id_rsa.pub.erb'
   owner 'hadoop'
@@ -80,7 +80,7 @@ template "#{home_dir}/.ssh/authorized_keys" do
   action 'create'
 end
 
-# configure hadoop core.
+# Configure Hadoop core.
 template "#{home_dir}/etc/hadoop/core-site.xml" do
   source 'core-site.xml.erb'
   owner 'hadoop'
@@ -95,7 +95,7 @@ template "#{home_dir}/etc/hadoop/core-site.xml" do
   action 'create'
 end
 
-# configure hadoop environment variables.
+# Configure Hadoop environment variables.
 template "#{home_dir}/etc/hadoop/hadoop-env.sh" do
   source 'hadoop-env.sh.erb'
   owner 'hadoop'
@@ -109,7 +109,7 @@ template "#{home_dir}/etc/hadoop/hadoop-env.sh" do
   action 'create'
 end
 
-# configure hadoop hdfs.
+# Configure Hadoop HDFS.
 template "#{home_dir}/etc/hadoop/hdfs-site.xml" do
   source 'hdfs-site.xml.erb'
   owner 'hadoop'
@@ -123,7 +123,7 @@ template "#{home_dir}/etc/hadoop/hdfs-site.xml" do
   action 'create'
 end
 
-# configure hadoop mapreduce.
+# Configure Hadoop mapreduce.
 template "#{home_dir}/etc/hadoop/mapred-site.xml" do
   source 'mapred-site.xml.erb'
   owner 'hadoop'
@@ -133,7 +133,7 @@ template "#{home_dir}/etc/hadoop/mapred-site.xml" do
   action 'create'
 end
 
-# configure hadoop yarn.
+# Configure Hadoop YARN.
 template "#{home_dir}/etc/hadoop/yarn-site.xml" do
   source 'yarn-site.xml.erb'
   owner 'hadoop'

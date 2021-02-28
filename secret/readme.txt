@@ -1,1 +1,1 @@
-1. Place ssh keys of hadoop namenode and datanode here.
+- Place SSH keys of Hadoop namenode and datanode here.

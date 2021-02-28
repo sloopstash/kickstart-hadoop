@@ -4,8 +4,8 @@ current_instance = search('aws_opsworks_instance','self:true').first
 node_name = current_instance['hostname']
 
 if node_name.include?('-nm-')
-  # initialize hadoop hdfs.
-  execute 'initialize hadoop hdfs' do
+  # Initialize Hadoop HDFS.
+  execute 'Initialize Hadoop HDFS' do
     command "#{home_dir}/bin/hdfs namenode -format"
     user 'hadoop'
     group 'hadoop'

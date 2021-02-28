@@ -4,8 +4,8 @@ current_instance = search('aws_opsworks_instance','self:true').first
 node_name = current_instance['hostname']
 
 if node_name.include?('-nm-')
-  # stop hadoop hdfs.
-  execute 'stop hadoop hdfs' do
+  # Stop Hadoop HDFS.
+  execute 'Stop Hadoop HDFS' do
     command "#{home_dir}/sbin/stop-dfs.sh"
     user 'hadoop'
     group 'hadoop'
@@ -16,8 +16,8 @@ if node_name.include?('-nm-')
     end
   end
 
-  # stop hadoop yarn.
-  execute 'stop hadoop yarn' do
+  # Stop Hadoop YARN.
+  execute 'Stop Hadoop YARN' do
     command "#{home_dir}/sbin/stop-yarn.sh"
     user 'hadoop'
     group 'hadoop'

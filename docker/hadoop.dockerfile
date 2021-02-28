@@ -1,7 +1,7 @@
-# pull core image.
+# Docker image to use.
 FROM amazonlinux:2
 
-# install system packages.
+# Install system packages.
 RUN set -x \
   && yum update -y \
   && yum install -y wget vim net-tools initscripts gcc make tar bind-utils nc \
@@ -9,20 +9,20 @@ RUN set -x \
   && easy_install supervisor pip \
   && mkdir /etc/supervisord.d
 
-# install openssh server and passwd.
+# Install OpenSSH server.
 RUN yum install -y openssh-server openssh-clients passwd
 
-# configure openssh server.
+# Configure OpenSSH server.
 RUN set -x \
   && mkdir /var/run/sshd \
   && ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N '' \
   && sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 
-# create user named hadoop.
+# Create system user for Hadoop.
 RUN set -x \
   && useradd -m -s /bin/bash -d /usr/local/lib/hadoop hadoop
 
-# configure openssh user.
+# Configure OpenSSH user.
 RUN set -x \
   && mkdir /usr/local/lib/hadoop/.ssh \
   && touch /usr/local/lib/hadoop/.ssh/authorized_keys \
@@ -31,13 +31,13 @@ RUN set -x \
   && chmod 400 /usr/local/lib/hadoop/.ssh/config
 ADD secret/hadoop-node.pub /usr/local/lib/hadoop/.ssh/authorized_keys
 
-# install java development kit.
+# Install Java.
 RUN yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
 
-# switch work directory.
+# Switch work directory.
 WORKDIR /tmp
 
-# install hadoop.
+# Install Hadoop.
 RUN set -x \
   && wget http://apachemirror.wuchna.com/hadoop/common/hadoop-2.10.0/hadoop-2.10.0.tar.gz --quiet \
   && tar xvzf hadoop-2.10.0.tar.gz > /dev/null \
@@ -54,5 +54,5 @@ RUN set -x \
   && touch /opt/hadoop/system/process.pid \
   && chown -R hadoop:hadoop /opt/hadoop
 
-# switch work directory.
+# Switch work directory.
 WORKDIR /

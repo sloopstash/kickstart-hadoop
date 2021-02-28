@@ -1,4 +1,4 @@
-# default attributes.
+# Default attributes.
 default['hadoop'] = {
   'version' => '2.10.0',
   'java_home' => '/usr/lib/jvm/jre-1.8.0-openjdk',

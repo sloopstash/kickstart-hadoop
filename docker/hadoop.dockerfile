@@ -33,12 +33,12 @@ RUN set -x \
   && rm -rf jdk-8u131-linux-x64.rpm
 
 # Install Hadoop.
-COPY hadoop-2.10.0.tar.gz ./
+COPY hadoop-2.10.1.tar.gz ./
 RUN set -x \
-  && tar xvzf hadoop-2.10.0.tar.gz > /dev/null \
-  && cp -r hadoop-2.10.0/* /usr/local/lib/hadoop/ \
+  && tar xvzf hadoop-2.10.1.tar.gz > /dev/null \
+  && cp -r hadoop-2.10.1/* /usr/local/lib/hadoop/ \
   && chown -R hadoop:hadoop /usr/local/lib/hadoop \
-  && rm -rf hadoop-2.10.0.tar.gz hadoop-2.10.0
+  && rm -rf hadoop-2.10.1.tar.gz hadoop-2.10.1
 RUN set -x \
   && mkdir /opt/hadoop \
   && mkdir /opt/hadoop/data \

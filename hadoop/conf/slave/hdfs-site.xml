@@ -1,0 +1,6 @@
+<configuration>
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>/opt/hadoop/data</value>
+  </property>
+</configuration>

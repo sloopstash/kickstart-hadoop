@@ -22,7 +22,7 @@
 # remote nodes.
 
 # The java implementation to use.
-export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk
+export JAVA_HOME=${JAVA_HOME}
 
 # The jsvc implementation to use. Jsvc is required to run secure datanodes
 # that bind to privileged ports to provide authentication of data transfer
@@ -42,8 +42,8 @@ for f in $HADOOP_HOME/contrib/capacity-scheduler/*.jar; do
 done
 
 # The maximum amount of heap to use, in MB. Default is 1000.
-export HADOOP_HEAPSIZE=512
-export HADOOP_NAMENODE_INIT_HEAPSIZE=512
+export HADOOP_HEAPSIZE=256
+export HADOOP_NAMENODE_INIT_HEAPSIZE=256
 
 # Enable extra debugging of Hadoop's JAAS binding, used to set up
 # Kerberos security.
@@ -61,13 +61,13 @@ export HADOOP_DATANODE_OPTS="-Dhadoop.security.logger=ERROR,RFAS $HADOOP_DATANOD
 export HADOOP_SECONDARYNAMENODE_OPTS="-Dhadoop.security.logger=${HADOOP_SECURITY_LOGGER:-INFO,RFAS} -Dhdfs.audit.logger=${HDFS_AUDIT_LOGGER:-INFO,NullAppender} $HADOOP_SECONDARYNAMENODE_OPTS"
 
 export HADOOP_NFS3_OPTS="$HADOOP_NFS3_OPTS"
-export HADOOP_PORTMAP_OPTS="-Xmx512m $HADOOP_PORTMAP_OPTS"
+export HADOOP_PORTMAP_OPTS="-Xmx256m $HADOOP_PORTMAP_OPTS"
 
 # The following applies to multiple commands (fs, dfs, fsck, distcp etc)
 export HADOOP_CLIENT_OPTS="$HADOOP_CLIENT_OPTS"
 # set heap args when HADOOP_HEAPSIZE is empty
 if [ "$HADOOP_HEAPSIZE" = "" ]; then
-  export HADOOP_CLIENT_OPTS="-Xmx512m $HADOOP_CLIENT_OPTS"
+  export HADOOP_CLIENT_OPTS="-Xmx256m $HADOOP_CLIENT_OPTS"
 fi
 #HADOOP_JAVA_PLATFORM_OPTS="-XX:-UsePerfData $HADOOP_JAVA_PLATFORM_OPTS"
 

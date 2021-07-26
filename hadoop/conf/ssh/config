@@ -1,4 +1,0 @@
-Host *
-  User hadoop
-  StrictHostKeyChecking no
-  IdentityFile ~/.ssh/id_rsa

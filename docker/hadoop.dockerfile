@@ -1,16 +1,8 @@
 # Docker image to use.
-FROM amazonlinux:2
+FROM sloopstash/amazonlinux:v1
 
-# Install system packages.
-RUN set -x \
-  && yum update -y \
-  && yum install -y wget vim net-tools initscripts gcc make tar bind-utils nc \
-  && yum install -y python-devel python-setuptools \
-  && easy_install supervisor pip \
-  && mkdir /etc/supervisord.d
-
-# Install OpenSSH server.
-RUN yum install -y openssh-server openssh-clients passwd
+# Install OpenSSH server and Git.
+RUN yum install -y openssh-server passwd git
 
 # Configure OpenSSH server.
 RUN set -x \
@@ -29,17 +21,20 @@ RUN set -x \
   && touch /usr/local/lib/hadoop/.ssh/config \
   && echo -e "Host *\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null" >> /usr/local/lib/hadoop/.ssh/config \
   && chmod 400 /usr/local/lib/hadoop/.ssh/config
-ADD secret/hadoop-node.pub /usr/local/lib/hadoop/.ssh/authorized_keys
-
-# Install Java.
-RUN yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
+ADD secret/node.pub /usr/local/lib/hadoop/.ssh/authorized_keys
 
 # Switch work directory.
 WORKDIR /tmp
 
-# Install Hadoop.
+# Install Oracle JDK.
+COPY jdk-8u131-linux-x64.rpm ./
 RUN set -x \
-  && wget http://apachemirror.wuchna.com/hadoop/common/hadoop-2.10.0/hadoop-2.10.0.tar.gz --quiet \
+  && rpm -Uvh jdk-8u131-linux-x64.rpm \
+  && rm -rf jdk-8u131-linux-x64.rpm
+
+# Install Hadoop.
+COPY hadoop-2.10.0.tar.gz ./
+RUN set -x \
   && tar xvzf hadoop-2.10.0.tar.gz > /dev/null \
   && cp -r hadoop-2.10.0/* /usr/local/lib/hadoop/ \
   && chown -R hadoop:hadoop /usr/local/lib/hadoop \
@@ -47,12 +42,15 @@ RUN set -x \
 RUN set -x \
   && mkdir /opt/hadoop \
   && mkdir /opt/hadoop/data \
-  && mkdir /opt/hadoop/tmp \
   && mkdir /opt/hadoop/log \
-  && mkdir /opt/hadoop/system \
   && mkdir /opt/hadoop/script \
+  && mkdir /opt/hadoop/system \
+  && mkdir /opt/hadoop/tmp \
   && touch /opt/hadoop/system/process.pid \
   && chown -R hadoop:hadoop /opt/hadoop
 
 # Switch work directory.
 WORKDIR /
+
+# Cleanup history.
+RUN history -c

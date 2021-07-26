@@ -1,3 +1,5 @@
-secret/*.pem
-secret/*.pub
 tmp/*
+*.log
+*.pem
+*node
+*.pub

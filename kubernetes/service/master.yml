@@ -3,7 +3,6 @@ kind: Service
 metadata:
   name: hadoop-master
 spec:
-  type: NodePort
   ports:
     - name: metadata
       port: 9000
@@ -12,7 +11,6 @@ spec:
     - name: web
       port: 50070
       targetPort: 50070
-      nodePort: 30080
-      protocol: TCP
+      protocol: HTTP
   selector:
     service: hadoop-master

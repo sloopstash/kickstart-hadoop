@@ -50,6 +50,12 @@ spec:
                   - "/bin/su"
                   - "hadoop"
                   - "/opt/hadoop/script/start.sh"
+            preStop:
+              exec:
+                command:
+                  - "/bin/su"
+                  - "hadoop"
+                  - "/opt/hadoop/script/stop.sh"
           ports:
             - containerPort: 9000
             - containerPort: 50070

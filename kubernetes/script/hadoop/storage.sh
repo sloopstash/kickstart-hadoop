@@ -22,7 +22,7 @@ function create() {
   chown -R $1:$1 /mnt/kubernetes/hadoop
 }
 
-# Delete storage paths.
+# Delete Hadoop storage paths.
 function delete() {
   rm -rf /mnt/kubernetes/hadoop
 }
@@ -36,7 +36,7 @@ case $1 in
     delete;
     ;;
   *)
-    echo "Usage: ./manage.sh {create|delete}"
+    echo "Usage: ./storage.sh {create|delete}"
     exit 1;
     ;;
 esac

@@ -35,6 +35,8 @@ spec:
               mountPath: /usr/local/lib/hadoop/etc/hadoop/core-site.xml
             - name: hadoop-hdfs-site
               mountPath: /usr/local/lib/hadoop/etc/hadoop/hdfs-site.xml
+            - name: hadoop-data
+              mountPath: /opt/hadoop/data
             - name: hadoop-script
               mountPath: /opt/hadoop/script
           command:
@@ -65,7 +67,21 @@ spec:
           hostPath:
             path: /opt/kickstart-hadoop/hadoop/conf/slave/hdfs-site.xml
             type: File
+        - name: hadoop-data
+          persistentVolumeClaim:
+            claimName: hadoop-data
         - name: hadoop-script
           hostPath:
             path: /opt/kickstart-hadoop/hadoop/script/slave
             type: Directory
+  volumeClaimTemplates:
+    - metadata:
+        name: hadoop-data
+      spec:
+        storageClassName: hadoop-slave-data
+        volumeMode: Filesystem
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi

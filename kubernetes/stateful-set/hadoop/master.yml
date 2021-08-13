@@ -66,22 +66,22 @@ spec:
             type: File
         - name: hadoop-env
           hostPath:
-            path: /opt/kickstart-hadoop/hadoop/conf/hadoop-env.sh
+            path: /opt/kickstart-hadoop/conf/hadoop-env.sh
             type: File
         - name: hadoop-core-site
           hostPath:
-            path: /opt/kickstart-hadoop/hadoop/conf/master/core-site.xml
+            path: /opt/kickstart-hadoop/conf/master/core-site.xml
             type: File
         - name: hadoop-hdfs-site
           hostPath:
-            path: /opt/kickstart-hadoop/hadoop/conf/master/hdfs-site.xml
+            path: /opt/kickstart-hadoop/conf/master/hdfs-site.xml
             type: File
         - name: hadoop-data
           persistentVolumeClaim:
             claimName: hadoop-data
         - name: hadoop-script
           hostPath:
-            path: /opt/kickstart-hadoop/hadoop/script/master
+            path: /opt/kickstart-hadoop/script/master
             type: Directory
   volumeClaimTemplates:
     - metadata:
